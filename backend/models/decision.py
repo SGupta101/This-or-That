@@ -18,10 +18,11 @@ class DecisionResponse(BaseModel):
 class DecisionHistory(BaseModel):
     """Model for storing decision history"""
     session_id: str
+    decision_id: str  # Unique ID for each decision
     option_a: str
     option_b: str
-    choice: str
-    reasoning: Optional[str]
-    decision_type: str
+    app_choice: str  # What the app suggested
+    app_reasoning: Optional[str]  # Reasoning provided by the app
+    user_final_choice: Optional[str] = None  # What the user decided (can be None)
+    decision_type: str  # "random" or "reasoned"
     timestamp: datetime
-    user_final_choice: Optional[str] = None
