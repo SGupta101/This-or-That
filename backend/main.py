@@ -75,9 +75,29 @@ async def make_decision(request: DecisionRequest):
 # GET /api/history
 # Get the decision history for the current session
 @app.get("/api/history")
-async def get_history():
-    # Implementation will go here
-    pass
+async def get_history(session_id: str):
+    history = session_storage.get_history(session_id)
+    return {
+        "decisions": [
+            {
+                "decision_id": decision.decision_id,
+                "options": {
+                    "option_a": decision.option_a,
+                    "option_b": decision.option_b
+                },
+                "app_decision": {
+                    "choice": decision.app_choice,
+                    "reasoning": decision.app_reasoning
+                },
+                "user_decision": {
+                    "choice": decision.user_final_choice or "No final choice made"
+                },
+                "decision_type": decision.decision_type,
+                "timestamp": decision.timestamp
+            }
+            for decision in history
+        ]
+    }
 
 # POST /api/history/{decision_id}/final-choice
 # Record the user's final choice for a decision
