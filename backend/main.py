@@ -5,6 +5,9 @@ from typing import Optional
 from datetime import datetime
 from utils.session_storage import session_storage
 from utils.openai_helper import get_reasoned_decision
+from models.decision import DecisionRequest, DecisionResponse, DecisionHistory
+import uuid
+import random
 
 app = FastAPI(title="Decision Maker API", version="1.0.0")
 
@@ -33,19 +36,19 @@ async def make_decision(request: DecisionRequest, session_id: str = None):
     # Generate a unique decision ID
     decision_id = str(uuid.uuid4())
     
-    if request.decision_type == "random":
-        choice = random.choice([request.option_a, request.option_b])
-        reasoning = None
-        decision_type = "random"
-    elif request.decision_type == "reasoned":
+    if request.user_reasoning:
         openai_response = get_reasoned_decision(request.option_a, request.option_b)
+        print("OpenAI response:", openai_response)
         if openai_response is None:
+            print("raising http exception")
             raise HTTPException(status_code=500, detail="Failed to get reasoned decision")
         choice = openai_response["choice"]
         reasoning = openai_response["reasoning"]
         decision_type = "reasoned"
     else:
-        raise HTTPException(status_code=400, detail="Invalid decision type")
+        choice = random.choice([request.option_a, request.option_b])
+        reasoning = None
+        decision_type = "random"
 
     # Create the response
     response = DecisionResponse(
@@ -70,7 +73,6 @@ async def make_decision(request: DecisionRequest, session_id: str = None):
         timestamp=datetime.now()
     )
     session_storage.add_decision(session_id, decision_history)
-
     return response
 
 # GET /api/history

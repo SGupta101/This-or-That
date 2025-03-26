@@ -6,7 +6,7 @@ class DecisionRequest(BaseModel):
     """Request model for making a decision"""
     option_a: str
     option_b: str
-    use_reasoning: bool = False  # Default to random if not specified
+    user_reasoning: bool = False  # Default to random if not specified
 
 class DecisionResponse(BaseModel):
     """Response model for decision result"""
@@ -14,6 +14,8 @@ class DecisionResponse(BaseModel):
     reasoning: Optional[str] = None
     decision_type: str  # "random" or "reasoned"
     timestamp: datetime
+    decision_id: str
+    session_id: str
 
 class DecisionHistory(BaseModel):
     """Model for storing decision history"""

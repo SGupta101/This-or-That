@@ -28,10 +28,10 @@ def get_reasoned_decision(option_a: str, option_b: str) -> dict:
     2. {option_b}
     
     Your response should be in this JSON format:
-    {
+    {{
         "choice": "Option 1 or Option 2",
         "reasoning": "Clear and concise explanation for why you chose this option"
-    }
+    }}
     """
     
     try:
