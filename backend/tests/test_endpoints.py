@@ -105,3 +105,36 @@ def test_get_history(decision_request):
     reasoned_history = next(d for d in decisions if d["decision_id"] == reasoned_decision["decision_id"])
     assert reasoned_history["app_decision"]["choice"] == reasoned_decision["choice"]
     assert reasoned_history["app_decision"]["reasoning"] == reasoned_decision["reasoning"]
+
+def test_record_final_choice(decision_request):
+    """Test recording a user's final choice for a decision"""
+    # Create a session ID
+    session_id = "test-session-123"
+    
+    # Make a decision first
+    decision_request.user_reasoning = False
+    response = client.post(f"/api/decide?session_id={session_id}", json=decision_request.model_dump())
+    assert response.status_code == 200
+    decision = response.json()
+    
+    # Record a final choice
+    decision_id = decision["decision_id"]
+    choice = decision["choice"]  # Record the same choice for testing
+    
+    response = client.post(
+        f"/api/history/{decision_id}/final-choice?choice={choice}&session_id={session_id}"
+    )
+    assert response.status_code == 200
+    assert response.json() == {"status": "success"}
+    
+    # Verify the choice was recorded
+    response = client.get(f"/api/history?session_id={session_id}")
+    assert response.status_code == 200
+    
+    history = response.json()
+    assert "decisions" in history
+    decisions = history["decisions"]
+    
+    # Find our decision in the history
+    recorded_decision = next(d for d in decisions if d["decision_id"] == decision_id)
+    assert recorded_decision["user_decision"]["choice"] == choice
