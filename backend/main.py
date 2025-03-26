@@ -102,9 +102,13 @@ async def get_history(session_id: str):
 # POST /api/history/{decision_id}/final-choice
 # Record the user's final choice for a decision
 @app.post("/api/history/{decision_id}/final-choice")
-async def record_final_choice(decision_id: str, choice: str):
-    # Implementation will go here
-    pass
+async def record_final_choice(decision_id: str, choice: str, session_id: str):
+    session_storage.update_decision(
+        session_id,
+        decision_id,
+        {"user_final_choice": choice}
+    )
+    return {"status": "success"}
 
 # GET /api/session
 # Get current session information
