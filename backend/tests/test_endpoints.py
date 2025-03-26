@@ -66,3 +66,42 @@ def test_openai_failure(decision_request, mocker):
     
     assert response.status_code == 500
     assert response.json() == {'detail': 'Failed to get reasoned decision'}
+
+def test_get_history(decision_request):
+    """Test getting decision history"""
+    # Create a session ID
+    session_id = "test-session-123"
+    
+    # Make a random decision
+    decision_request.user_reasoning = False
+    response = client.post(f"/api/decide?session_id={session_id}", json=decision_request.model_dump())
+    assert response.status_code == 200
+    random_decision = response.json()
+    
+    # Make a reasoned decision
+    decision_request.user_reasoning = True
+    response = client.post(f"/api/decide?session_id={session_id}", json=decision_request.model_dump())
+    assert response.status_code == 200
+    reasoned_decision = response.json()
+    
+    # Get the history
+    response = client.get(f"/api/history?session_id={session_id}")
+    assert response.status_code == 200
+    
+    history = response.json()
+    print("History:", history)
+    assert "decisions" in history
+    assert len(history["decisions"]) == 2
+    
+    # Verify the decisions in history
+    decisions = history["decisions"]
+    
+    # Check random decision
+    random_history = next(d for d in decisions if d["decision_id"] == random_decision["decision_id"])
+    assert random_history["app_decision"]["choice"] == random_decision["choice"]
+    assert random_history["app_decision"]["reasoning"] == random_decision["reasoning"]
+    
+    # Check reasoned decision
+    reasoned_history = next(d for d in decisions if d["decision_id"] == reasoned_decision["decision_id"])
+    assert reasoned_history["app_decision"]["choice"] == reasoned_decision["choice"]
+    assert reasoned_history["app_decision"]["reasoning"] == reasoned_decision["reasoning"]
