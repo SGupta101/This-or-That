@@ -25,10 +25,10 @@ async def root():
 # POST /api/decide
 # Make a decision between two options
 @app.post("/api/decide")
-async def make_decision(request: DecisionRequest):
+async def make_decision(request: DecisionRequest, session_id: str = None):
     # If no session_id is provided, create a new one
-    if not request.session_id:
-        request.session_id = str(uuid.uuid4())
+    if not session_id:
+        session_id = str(uuid.uuid4())
     
     # Generate a unique decision ID
     decision_id = str(uuid.uuid4())
@@ -53,22 +53,23 @@ async def make_decision(request: DecisionRequest):
         reasoning=reasoning,
         decision_type=decision_type,
         timestamp=datetime.now(),
-        decision_id=decision_id  # Add decision ID to response
+        decision_id=decision_id,
+        session_id=session_id
     )
 
     # Store the decision in session history
     decision_history = DecisionHistory(
-        session_id=request.session_id,
+        session_id=session_id,
         decision_id=decision_id,
         option_a=request.option_a,
         option_b=request.option_b,
         app_choice=choice,
         app_reasoning=reasoning,
-        user_final_choice=None,  # No user choice yet
+        user_final_choice=None,
         decision_type=decision_type,
         timestamp=datetime.now()
     )
-    session_storage.add_decision(request.session_id, decision_history)
+    session_storage.add_decision(session_id, decision_history)
 
     return response
 
