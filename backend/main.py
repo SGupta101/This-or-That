@@ -113,15 +113,9 @@ async def record_final_choice(decision_id: str, choice: str, session_id: str):
 # GET /api/session
 # Get current session information
 @app.get("/api/session")
-async def get_session():
-    # Implementation will go here
-    pass
+async def get_session(session_id: str):
+    return session_storage.get_session(session_id)
 
-# GET /
-# Check if the server is running
-@app.get("/")
-async def root():
-    return {"status": "healthy", "version": "1.0.0"}
 
 if __name__ == "__main__":
     import uvicorn

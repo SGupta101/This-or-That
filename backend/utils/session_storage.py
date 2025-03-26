@@ -19,6 +19,9 @@ class SessionStorage:
         """Get a specific decision by ID"""
         return self._storage.get(session_id, {}).get(decision_id)
 
+    def get_session(self, session_id:str):
+        return self._stroage.get(session_id, {})
+
     def get_history(self, session_id: str) -> List[DecisionHistory]:
         """Get all decisions for a session in order"""
         return [
