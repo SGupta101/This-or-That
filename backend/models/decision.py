@@ -1,53 +1,27 @@
-from sentence_transformers import SentenceTransformer, util
-import numpy as np
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime
 
-# Initialize the model (this will download it the first time)
-model = SentenceTransformer('all-MiniLM-L6-v2')
+class DecisionRequest(BaseModel):
+    """Request model for making a decision"""
+    option_a: str
+    option_b: str
+    use_reasoning: bool = False  # Default to random if not specified
 
-# Predefined criteria for evaluation
-CRITERIA = [
-    "is healthy",
-    "is productive",
-    "is relaxing",
-    "is cost-effective",
-    "is time-efficient"
-]
+class DecisionResponse(BaseModel):
+    """Response model for decision result"""
+    choice: str
+    reasoning: Optional[str] = None
+    decision_type: str  # "random" or "reasoned"
+    timestamp: datetime
 
-async def ai_decision(optionA: str, optionB: str, context: str = None):
-    # Encode the options
-    optionA_embedding = model.encode(optionA, convert_to_tensor=True)
-    optionB_embedding = model.encode(optionB, convert_to_tensor=True)
-    
-    # Encode criteria
-    criteria_embeddings = model.encode(CRITERIA, convert_to_tensor=True)
-    
-    # Calculate scores for each option against criteria
-    scoresA = util.pytorch_cos_sim(optionA_embedding, criteria_embeddings)[0]
-    scoresB = util.pytorch_cos_sim(optionB_embedding, criteria_embeddings)[0]
-    
-    # Convert to numpy for easier manipulation
-    scoresA = scoresA.cpu().numpy()
-    scoresB = scoresB.cpu().numpy()
-    
-    # Calculate overall score
-    scoreA = np.mean(scoresA)
-    scoreB = np.mean(scoresB)
-    
-    # Make decision
-    if scoreA > scoreB:
-        choice = optionA
-        winning_criteria = CRITERIA[np.argmax(scoresA)]
-    else:
-        choice = optionB
-        winning_criteria = CRITERIA[np.argmax(scoresB)]
-    
-    explanation = f"I recommend {choice} because it scores higher in {winning_criteria}"
-    
-    return {
-        "decision": choice,
-        "explanation": explanation,
-        "scores": {
-            optionA: float(scoreA),
-            optionB: float(scoreB)
-        }
-    }
+class DecisionHistory(BaseModel):
+    """Model for storing decision history"""
+    session_id: str
+    option_a: str
+    option_b: str
+    choice: str
+    reasoning: Optional[str]
+    decision_type: str
+    timestamp: datetime
+    user_final_choice: Optional[str] = None
