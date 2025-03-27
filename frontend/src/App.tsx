@@ -3,16 +3,16 @@ import ChoiceInput from "./components/ChoiceInput";
 import { DecisionTypeToggle } from "./components/DecisionTypeToggle";
 import DecisionButton from "./components/DecisionButton";
 import FinalChoiceInput from "./components/FinalChoiceInput";
-import { makeDecision, getHistory } from "./services/api";
+import { makeDecision } from "./services/api";
 
 function App() {
   const [choices, setChoices] = useState({ option_a: "", option_b: "" });
-  const [decisionType, setDecisionType] = useState<boolean>(true);
+  const [decisionType, setDecisionType] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [decision, setDecision] = useState<string | null>(null);
   const [reasoning, setReasoning] = useState<string | null>(null);
-  const [showFinalChoiceInput, setShowFinalChoiceInput] = useState(false);
+  const [showFinalChoiceInput] = useState(false);
 
   const handleDecide = async () => {
     if (!choices.option_a || !choices.option_b) {
