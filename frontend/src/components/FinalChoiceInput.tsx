@@ -43,12 +43,6 @@ const FinalChoiceInput = ({
     setError(null);
 
     try {
-      console.log(
-        "recording final choice:",
-        decisionId,
-        finalChoice,
-        sessionId
-      );
       await recordFinalChoice(decisionId, finalChoice, sessionId);
       onChoiceRecorded();
     } catch (err) {

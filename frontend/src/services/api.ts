@@ -23,7 +23,6 @@ export interface DecisionResponse {
 
 export const makeDecision = async (data: DecisionRequest): Promise<DecisionResponse> => {
   try {
-    console.log("request:", data)
     const response = await api.post('/api/decide', data);
     return response.data;
   } catch (error) {
