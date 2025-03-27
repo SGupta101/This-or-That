@@ -28,9 +28,14 @@ For security reasons, **NEVER commit your OpenAI API key to version control**. T
 
 2. Set up environment variables:
    ```bash
+   # Backend environment setup
    cp backend/.env.example backend/.env
+   # Edit backend/.env and add your OpenAI API key if you want to use AI-powered decisions
+
+   # Frontend environment setup
+   cp frontend/.env.example frontend/.env
+   # The frontend .env file contains the API URL, default is http://localhost:8000
    ```
-   Edit `backend/.env` and add your OpenAI API key if you want to use AI-powered decisions.
 
 ## Running the App
 
