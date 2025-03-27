@@ -41,3 +41,14 @@ export const getHistory = async (): Promise<DecisionResponse[]> => {
     throw error;
   }
 };
+
+export const recordFinalChoice = async (decisionId: string, finalChoice: string, sessionId: string) => {
+  try {
+    await api.post(`/api/history/${decisionId}/final-choice/${finalChoice}`, {
+      session_id: sessionId
+    });
+  } catch (error) {
+    console.error('Error recording final choice:', error);
+    throw error;
+  }
+};

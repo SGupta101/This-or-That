@@ -2,7 +2,7 @@ import { useState } from "react";
 import ChoiceInput from "./components/ChoiceInput";
 import { DecisionTypeToggle } from "./components/DecisionTypeToggle";
 import DecisionButton from "./components/DecisionButton";
-import History from "./components/History";
+import FinalChoiceInput from "./components/FinalChoiceInput";
 import { makeDecision, getHistory } from "./services/api";
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [decision, setDecision] = useState<string | null>(null);
   const [reasoning, setReasoning] = useState<string | null>(null);
+  const [showFinalChoiceInput, setShowFinalChoiceInput] = useState(false);
 
   const handleDecide = async () => {
     if (!choices.option_a || !choices.option_b) {
@@ -89,8 +90,14 @@ function App() {
           )}
         </div>
       )}
-
-      <History />
+      {showFinalChoiceInput && (
+        <FinalChoiceInput 
+          options={choices} 
+          decisionId={null} 
+          onChoiceRecorded={() => console.log('Choice recorded')} 
+          className="mb-6"
+        />
+      )}
     </div>
   );
 }
