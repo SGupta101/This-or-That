@@ -13,6 +13,10 @@ An AI-powered decision-making tool to help you choose between two options.
 - Docker and Docker Compose installed on your machine (only needed for Docker option)
 - OpenAI API key (only needed for AI-powered decisions)
 
+## Security Note
+
+For security reasons, **NEVER commit your OpenAI API key to version control**. The `.env` file is already in `.gitignore`, so you can safely store your API key there.
+
 ## Setup
 
 1. Clone the repository:
@@ -24,9 +28,9 @@ An AI-powered decision-making tool to help you choose between two options.
 
 2. Set up environment variables:
    ```bash
-   cp .env.example .env
+   cp backend/.env.example backend/.env
    ```
-   Edit `.env` and add your OpenAI API key if you want to use AI-powered decisions.
+   Edit `backend/.env` and add your OpenAI API key if you want to use AI-powered decisions.
 
 ## Running the App
 
@@ -62,12 +66,12 @@ An AI-powered decision-making tool to help you choose between two options.
 
    ```bash
    # Backend
-   cp .env.example .env
-   # Edit .env and add your OpenAI API key if you want to use AI-powered decisions
+   cp backend/.env.example backend/.env
+   # Edit backend/.env and add your OpenAI API key if you want to use AI-powered decisions
 
    # Frontend
-   cp .env.example .env
-   # Edit .env and set VITE_API_URL=http://localhost:8000
+   cp frontend/.env.example frontend/.env
+   # Edit frontend/.env and set VITE_API_URL=http://localhost:8000
    ```
 
 3. Start the backend:
