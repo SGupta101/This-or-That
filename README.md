@@ -45,30 +45,33 @@ An AI-powered decision-making tool to help you choose between two options.
 ### Option 2: Without Docker
 
 1. Install dependencies:
+
    ```bash
    # Backend (Python)
    cd backend
    python -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
-   
+
    # Frontend (Node.js)
    cd ../frontend
    npm install
    ```
 
 2. Set up environment variables:
+
    ```bash
    # Backend
    cp .env.example .env
    # Edit .env and add your OpenAI API key if you want to use AI-powered decisions
-   
+
    # Frontend
    cp .env.example .env
    # Edit .env and set VITE_API_URL=http://localhost:8000
    ```
 
 3. Start the backend:
+
    ```bash
    cd backend
    source .venv/bin/activate
@@ -76,6 +79,7 @@ An AI-powered decision-making tool to help you choose between two options.
    ```
 
 4. In a new terminal, start the frontend:
+
    ```bash
    cd frontend
    npm run dev
@@ -100,3 +104,4 @@ The app uses:
 - Frontend: React + TypeScript + Vite + TailwindCSS
 - Backend: Python + FastAPI
 - Containerization: Docker + Docker Compose
+- Windsurf AI
