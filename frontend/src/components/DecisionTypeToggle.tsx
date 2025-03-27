@@ -1,10 +1,16 @@
 interface Props {
-  decisionType: "reasoned" | "random";
-  onToggle: (type: "reasoned" | "random") => void;
+  decisionType: boolean;
+  onToggle: (value: boolean) => void;
   className?: string;
 }
 
-export function DecisionTypeToggle({ decisionType, onToggle, className }: Props) {
+export function DecisionTypeToggle({
+  decisionType,
+  onToggle,
+  className,
+}: Props) {
+  const toggleLabel = decisionType ? "Reasoned" : "Random";
+
   return (
     <div className={`flex items-center gap-4 ${className}`}>
       <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -17,10 +23,8 @@ export function DecisionTypeToggle({ decisionType, onToggle, className }: Props)
         <input
           type="checkbox"
           className="sr-only peer"
-          checked={decisionType === "random"}
-          onChange={() =>
-            onToggle(decisionType === "reasoned" ? "random" : "reasoned")
-          }
+          checked={decisionType}
+          onChange={(e) => onToggle(e.target.checked)}
         />
 
         {/* Toggle Track (Background) */}
@@ -31,9 +35,9 @@ export function DecisionTypeToggle({ decisionType, onToggle, className }: Props)
 
         {/* Label Text (Dynamic) */}
         <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-100">
-          {decisionType === "random" ? "Random" : "Reasoned"}
+          {toggleLabel}
         </span>
       </label>
     </div>
   );
-};
+}

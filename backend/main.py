@@ -29,12 +29,15 @@ async def root():
 # Make a decision between two options
 @app.post("/api/decide")
 async def make_decision(request: DecisionRequest, session_id: str = None):
+    print("request inside backend:", request)
     # If no session_id is provided, create a new one
     if not session_id:
         session_id = str(uuid.uuid4())
     
     # Generate a unique decision ID
     decision_id = str(uuid.uuid4())
+    print("request:", request)
+    print("session_id:", session_id)
     
     if request.user_reasoning:
         openai_response = get_reasoned_decision(request.option_a, request.option_b)

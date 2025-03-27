@@ -1,14 +1,19 @@
 interface Props {
-  onDecide: () => void;
+  onDecide: () => Promise<void>;
+  loading: boolean;
+  className?: string;
 }
 
-const DecisionButton = ({ onDecide }: Props) => {
+const DecisionButton = ({ onDecide, loading, className = '' }: Props) => {
   return (
     <button
-      className="bg-green-500 text-white px-4 py-2 rounded w-full mt-4"
+      className={`bg-green-500 text-white px-4 py-2 rounded w-full mt-4 ${className} ${
+        loading ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
       onClick={onDecide}
+      disabled={loading}
     >
-      Get a Decision
+      {loading ? 'Making Decision...' : 'Get a Decision'}
     </button>
   );
 };
