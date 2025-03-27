@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ChoiceInput from "./components/ChoiceInput";
-import DecisionTypeToggle from "./components/DecisionTypeToggle";
+import { DecisionTypeToggle } from "./components/DecisionTypeToggle";
 import DecisionButton from "./components/DecisionButton";
 import History from "./components/History";
 
@@ -12,14 +12,18 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold mb-4">This or That</h1>
+      <h1 className="text-2xl font-bold mb-8">This or That</h1>
+
       <ChoiceInput
         onChoicesChange={(choiceA, choiceB) => setChoices({ choiceA, choiceB })}
+        className="mb-6"
       />
       <DecisionTypeToggle
         decisionType={decisionType}
         onToggle={setDecisionType}
+        className="mb-6"
       />
+
       <DecisionButton
         onDecide={() =>
           alert(`Choosing between ${choices.choiceA} and ${choices.choiceB}...`)

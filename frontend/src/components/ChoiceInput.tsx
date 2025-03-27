@@ -2,14 +2,15 @@ import { useState } from "react";
 
 interface Props {
   onChoicesChange: (choiceA: string, choiceB: string) => void;
+  className?: string;
 }
 
-const ChoiceInput = ({ onChoicesChange }: Props) => {
+const ChoiceInput = ({ onChoicesChange, className }: Props) => {
   const [choiceA, setChoiceA] = useState("");
   const [choiceB, setChoiceB] = useState("");
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`${className} flex flex-col gap-2`}>
       <input
         type="text"
         className="p-2 border rounded"
