@@ -26,27 +26,35 @@ For security reasons, **NEVER commit your OpenAI API key to version control**. T
    cd This-or-That
    ```
 
+## Demo Video
+
+<video width="640" height="360" controls>
+  <source src="docs/This-or-That-Demo.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 2. Set up environment variables:
 
-   If using Docker (recommended):
-   ```bash
-   # Root environment setup (for Docker)
-   cp .env.example .env
-   # Edit .env and add your OpenAI API key
-   ```
+If using Docker (recommended):
 
-   If running without Docker:
-   ```bash
-   # Backend environment setup
-   cp backend/.env.example backend/.env
-   # Edit backend/.env and add your OpenAI API key
+```bash
+# Root environment setup (for Docker)
+cp .env.example .env
+# Edit .env and add your OpenAI API key
+```
 
-   # Frontend environment setup
-   cp frontend/.env.example frontend/.env
-   # The frontend .env file contains the API URL, default is http://localhost:8000
-   ```
+If running without Docker:
 
-   Note: When using Docker, only the root `.env` file is needed. When running without Docker, you'll need both the backend and frontend `.env` files.
+```bash
+# Backend environment setup
+cp backend/.env.example backend/.env
+# Edit backend/.env and add your OpenAI API key
+
+# Frontend environment setup
+cp frontend/.env.example frontend/.env
+# The frontend .env file contains the API URL, default is http://localhost:8000
+```
+
+Note: When using Docker, only the root `.env` file is needed. When running without Docker, you'll need both the backend and frontend `.env` files.
 
 ## Running the App
 
