@@ -8,6 +8,13 @@ An AI-powered decision-making tool to help you choose between two options.
 - Random coin flip mode
 - Docker containerization for easy setup
 
+## Demo Video
+
+<video width="640" height="360" controls>
+  <source src="docs/This-or-That-Demo.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Prerequisites
 
 - Docker and Docker Compose installed on your machine (only needed for Docker option)
@@ -26,12 +33,6 @@ For security reasons, **NEVER commit your OpenAI API key to version control**. T
    cd This-or-That
    ```
 
-## Demo Video
-
-<video width="640" height="360" controls>
-  <source src="docs/This-or-That-Demo.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 2. Set up environment variables:
 
 If using Docker (recommended):
