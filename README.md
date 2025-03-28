@@ -8,12 +8,9 @@ An AI-powered decision-making tool to help you choose between two options.
 - Random coin flip mode
 - Docker containerization for easy setup
 
-## Demo Video
+## 🎥 Demo
 
-<video width="640" height="360" controls>
-  <source src="docs/This-or-That-Demo.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Watch the Demo](https://drive.google.com/file/d/1lz_m9sX8Fj3ejZbWcbLo2WTwTlXfbW9h/view?usp=sharing)
 
 ## Prerequisites
 
